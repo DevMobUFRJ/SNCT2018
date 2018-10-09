@@ -4,29 +4,74 @@ public class CollisionTrigger : MonoBehaviour {
 
     public int actualWoman;
 
+    public Canvas canvas1, canvas2, canvas3;
+
+
+    private void Awake()
+    {
+        if(actualWoman == 1)
+        {
+            canvas1.gameObject.SetActive(false);
+        }
+        if(actualWoman == 2)
+        {
+            canvas2.gameObject.SetActive(false);
+        }
+        if(actualWoman == 3)
+        {
+            canvas3.gameObject.SetActive(false);
+        }
+
+    }
+
     private void OnTriggerEnter(Collider col)
     {
+        MultiTagging.Tags myTag = col.gameObject.GetComponent<MultiTagging>().GetMyTag();
+
         if (col.gameObject.CompareTag("Item"))
         {
-            Debug.Log("Entrou no item");
-            if(actualWoman == 1)
+            if(actualWoman == 1 && myTag == MultiTagging.Tags.Item1)
             {
-                //Aparece Canvas 1
-                Debug.Log("Canvas 1");
+                canvas1.gameObject.SetActive(true);
             }
             else
             {
-                if(actualWoman == 2)
+                if(actualWoman == 2 && myTag == MultiTagging.Tags.Item2)
                 {
-                    //Aparece Canvas 2
-                    Debug.Log("Canvas 2");
+                    canvas2.gameObject.SetActive(true);
                 }
                 else
                 {
-                    if(actualWoman == 3)
+                    if(actualWoman == 3 && myTag == MultiTagging.Tags.Item3)
                     {
-                        //Aparece Canvas 3
-                        Debug.Log("Canvas 3");
+                        canvas3.gameObject.SetActive(true);
+                    }
+                }
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider col)
+    {
+        MultiTagging.Tags myTag = col.gameObject.GetComponent<MultiTagging>().GetMyTag();
+
+        if (col.gameObject.CompareTag("Item"))
+        {
+            if (actualWoman == 1 && myTag == MultiTagging.Tags.Item1)
+            {
+                canvas1.gameObject.SetActive(false);
+            }
+            else
+            {
+                if (actualWoman == 2 && myTag == MultiTagging.Tags.Item2)
+                {
+                    canvas2.gameObject.SetActive(false);
+                }
+                else
+                {
+                    if (actualWoman == 3 && myTag == MultiTagging.Tags.Item3)
+                    {
+                        canvas3.gameObject.SetActive(false);
                     }
                 }
             }
